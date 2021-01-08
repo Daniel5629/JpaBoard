@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
-public class board {
+public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
