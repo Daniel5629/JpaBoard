@@ -19,7 +19,7 @@
     />
   </head>
   <body>
-    <div th:fragment="menu">
+    <div th:fragment="menu(menu)">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#" th:href="@{/}">RestBoot</a>
@@ -37,13 +37,24 @@
 
           <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item active">
-                <a class="nav-link" aria-current="page" href="#" th:href="@{/}"
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="#"
+                  th:href="@{/}"
+                  th:classappend="${menu} == 'home' ? 'active'"
                   >홈</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{board/list}">게시판</a>
+                <a
+                  class="nav-link"
+                  href="#"
+                  th:classappend="${menu} == 'board' ? 'active'"
+                  th:href="@{board/list}"
+                  >게시판</a
+                >
               </li>
             </ul>
           </div>
