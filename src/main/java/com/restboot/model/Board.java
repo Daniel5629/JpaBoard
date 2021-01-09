@@ -1,27 +1,33 @@
 package com.restboot.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.sun.istack.NotNull;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
-@RequiredArgsConstructor
-@NoArgsConstructor
 @Getter
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50)
+    @NotNull
+    @Size(min = 1, max = 50)
     private String title;
 
+    @Lob
+    @NotNull
     private String content;
 
+    @Builder
+    public Board(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

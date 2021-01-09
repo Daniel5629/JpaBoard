@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments::header('board')"></head>
+  <body>
+    <div th:replace="fragments::menu('board')"></div>
+
+    <main class="container">
+      <h2>게시판 조회</h2>
+      <div class="mb-3">
+        <div class="mb-3">
+          <label for="title" class="form-label">제목</label>
+          <input 
+            type="text"
+            id="title"
+            class="form-control"
+            th:field="${board.title}"
+            readonly
+          ></input>
+        </div>
+
+        <label for="content" class="form-label">내용</label>
+        <textarea
+          id="content"
+          rows="10"
+          class="form-control"
+          th:field="${board.content}"
+          readonly
+        ></textarea>
+      </div>
+
+      <div class="float-end">
+        <a
+          type="button"
+          class="btn btn-primary mx-1"
+          th:href="@{/board/form(id=${board.id},mode=${'U'})}"
+        >
+          수정
+        </a>
+
+        <a type="button" class="btn btn-secondary" th:href="@{/board/list}">
+          목록
+        </a>
+      </div>
+    </main>
+
+    <div th:replace="fragments::footer"></div>
+  </body>
+</html>

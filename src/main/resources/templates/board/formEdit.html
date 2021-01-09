@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments::header('board')"></head>
+  <body>
+    <div th:replace="fragments::menu('board')"></div>
+
+    <main class="container">
+      <h2 th:if="${param.mode}" th:text="'게시글 수정'"></h2>
+      <h2 th:if="${param.mode == null}" th:text="'게시글 작성'"></h2>
+      <form th:action="@{/board/form}" th:object="${board}" method="post">
+        <div class="mb-3">
+          <div class="mb-3">
+            <input type="hidden" th:field="*{id}" />
+
+            <label for="title" class="form-label">제목</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              th:field="*{title}"
+              th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
+            />
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('title')}"
+              th:errors="*{title}"
+            ></div>
+          </div>
+
+          <label for="content" class="form-label">내용</label>
+          <textarea
+            class="form-control"
+            id="content"
+            rows="10"
+            name="content"
+            th:field="*{content}"
+            th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
+          ></textarea>
+          <div
+            class="invalid-feedback"
+            th:if="${#fields.hasErrors('content')}"
+            th:errors="*{content}"
+          ></div>
+        </div>
+
+        <div class="float-end">
+          <button type="submit" class="btn btn-primary">저장</button>
+          <th:bolck th:if="${board.id}">
+            <a
+              type="button"
+              class="btn btn-danger mx-1"
+              th:href="@{/board/form(id=${board.id})}"
+            >
+              취소
+            </a>
+          </th:bolck>
+          <a type="button" class="btn btn-secondary" th:href="@{/board/list}">
+            목록
+          </a>
+        </div>
+      </form>
+    </main>
+    <div th:replace="fragments::footer"></div>
+  </body>
+</html>
