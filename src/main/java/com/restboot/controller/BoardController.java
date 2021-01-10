@@ -31,11 +31,9 @@ public class BoardController {
     public String list(Model model, @PageableDefault(size = 10) Pageable pageable,
                        @RequestParam(required = false, defaultValue = "") String searchText) {
 
-//        Page<Board> boards = boardService.getBoards(pageable);
-
         Page<Board> boards = boardService.getBoarsWithSearchText(searchText, searchText, pageable);
 
-        int startPage = Math.max(1, boards.getPageable().getPageNumber() - 4); // 1,2,3,4 next -> 5,6,7,8
+        int startPage = Math.max(1, boards.getPageable().getPageNumber() - 4);
         int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber() + 4);
 
         model.addAttribute("startPage", startPage);
@@ -75,4 +73,11 @@ public class BoardController {
         boardService.postBoard(board);
         return "redirect:/board/list";
     }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam Long id) {
+        boardService.deleteBoard(id);
+        return "redirect:/board/list";
+    }
+
 }

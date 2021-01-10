@@ -5,17 +5,17 @@
     <div th:replace="fragments::menu('board')"></div>
 
     <main class="container">
-      <h2>게시판 조회</h2>
+      <h2>게시글 조회</h2>
       <div class="mb-3">
         <div class="mb-3">
           <label for="title" class="form-label">제목</label>
-          <input 
+          <input
             type="text"
             id="title"
             class="form-control"
             th:field="${board.title}"
             readonly
-          ></input>
+          />
         </div>
 
         <label for="content" class="form-label">내용</label>
@@ -27,22 +27,50 @@
           readonly
         ></textarea>
       </div>
+      <form
+        th:action="@{/board/delete(id=${board.id})}"
+        method="POST"
+        id="deleteForm"
+      >
+        <div class="float-end">
+          <a
+            type="button"
+            class="btn btn-primary mx-1"
+            th:href="@{/board/form(id=${board.id},mode=${'U'})}"
+          >
+            수정
+          </a>
 
-      <div class="float-end">
-        <a
-          type="button"
-          class="btn btn-primary mx-1"
-          th:href="@{/board/form(id=${board.id},mode=${'U'})}"
-        >
-          수정
-        </a>
+          <button
+            type="button"
+            id="delete"
+            name="delete"
+            class="btn btn-danger"
+            th:text="'삭제'"
+            onclick="javascript:deleteBoard()"
+          ></button>
 
-        <a type="button" class="btn btn-secondary" th:href="@{/board/list}">
-          목록
-        </a>
-      </div>
+          <a
+            type="button"
+            class="btn btn-secondary mx-1"
+            th:href="@{/board/list}"
+          >
+            목록
+          </a>
+        </div>
+      </form>
     </main>
 
     <div th:replace="fragments::footer"></div>
+
+    <script type="text/javascript">
+      function deleteBoard() {
+        if (!window.confirm("삭제하시겠습니까?")) {
+          return;
+        }
+
+        document.querySelector("#deleteForm").submit();
+      }
+    </script>
   </body>
 </html>

@@ -12,11 +12,11 @@
     />
 
     <title th:text="${title}"></title>
-    <link
-      href="starter-template.css"
-      th:href="@{/starter-template.css}"
-      rel="stylesheet"
-    />
+    <style>
+      body {
+        padding-top: 5rem;
+      }
+    </style>
   </head>
   <body>
     <div th:fragment="menu(menu)">
