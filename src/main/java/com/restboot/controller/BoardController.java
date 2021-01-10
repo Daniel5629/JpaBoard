@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,14 +65,18 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String post(@Valid Board board, BindingResult bindingResult) {
+    public String post(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
         boardValidator.validate(board, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "board/formEdit";
         }
 
-        boardService.postBoard(board);
+//        controller 외에서는 이런 방식으로 가져올 수 있다.
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getName();
+        boardService.postBoard(username, board);
         return "redirect:/board/list";
     }
 

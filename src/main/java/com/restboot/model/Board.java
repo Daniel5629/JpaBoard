@@ -25,9 +25,13 @@ public class Board {
     @NotNull
     private String content;
 
-    @Builder
-    public Board(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+//    @Builder
+//    public Board(String title, String content) {
+//        this.title = title;
+//        this.content = content;
+//    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

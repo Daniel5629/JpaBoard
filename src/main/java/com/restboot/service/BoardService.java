@@ -1,7 +1,9 @@
 package com.restboot.service;
 
 import com.restboot.model.Board;
+import com.restboot.model.User;
 import com.restboot.repository.BoardRepository;
+import com.restboot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public Page<Board> getBoards(Pageable pageable) {
@@ -22,9 +25,8 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public Page<Board> getBoarsWithSearchText(String title, String content, Pageable pageable) {
-        return  boardRepository.findByTitleContainingOrContentContaining(title, content, pageable);
+        return boardRepository.findByTitleContainingOrContentContaining(title, content, pageable);
     }
-
 
     @Transactional(readOnly = true)
     public Board getBoard(Long id) {
@@ -34,7 +36,10 @@ public class BoardService {
     }
 
     @Transactional
-    public Long postBoard(Board board) {
+    public Long postBoard(String username, Board board) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        board.setUser(user);
         return boardRepository.save(board).getId();
     }
 
