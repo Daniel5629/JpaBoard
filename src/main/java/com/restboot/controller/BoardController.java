@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,7 +64,7 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String post(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
+    public String post(@Valid Board board, @RequestParam(required = false) String mode, BindingResult bindingResult, Authentication authentication) {
         boardValidator.validate(board, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -76,14 +75,22 @@ public class BoardController {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         String username = authentication.getName();
-        boardService.postBoard(username, board);
+
+        if (StringUtils.equals(mode, "U")) {
+            boardService.updateBoard(username, board);
+        } else {
+            boardService.postBoard(username, board);
+        }
+
         return "redirect:/board/list";
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id) {
-        boardService.deleteBoard(id);
+    public String delete(@RequestParam Long id, Authentication authentication) {
+
+        String username = authentication.getName();
+
+        boardService.deleteBoard(username, id);
         return "redirect:/board/list";
     }
-
 }

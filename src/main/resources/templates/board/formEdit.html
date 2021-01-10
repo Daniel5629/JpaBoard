@@ -5,9 +5,13 @@
     <div th:replace="fragments::menu('board')"></div>
 
     <main class="container">
-      <h2 th:if="${param.mode}" th:text="'게시글 수정'"></h2>
-      <h2 th:if="${param.mode == null}" th:text="'게시글 작성'"></h2>
-      <form th:action="@{/board/form}" th:object="${board}" method="post">
+      <h2 th:if="${param.mode}" th:text="'✂ 게시글 수정 ✂'"></h2>
+      <h2 th:if="${param.mode == null}" th:text="'✏ 게시글 작성 ✏'"></h2>
+      <form
+        th:action="@{/board/form(mode=${param.mode})}"
+        th:object="${board}"
+        method="post"
+      >
         <div class="mb-3">
           <div class="mb-3">
             <input type="hidden" th:field="*{id}" />
@@ -45,17 +49,26 @@
         </div>
 
         <div class="text-right">
-          <button type="submit" class="btn btn-primary">저장</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            th:text="'💾 저장'"
+          ></button>
           <th:bolck th:if="${board.id}">
             <a
               type="button"
               class="btn btn-danger mx-1"
               th:href="@{/board/form(id=${board.id})}"
+              th:text="'❌ 취소'"
             >
-              취소
             </a>
           </th:bolck>
-          <a type="button" class="btn btn-secondary" th:href="@{/board/list}">
+          <a
+            type="button"
+            class="btn btn-secondary"
+            th:href="@{/board/list}"
+            th:text="'📋 목록'"
+          >
             목록
           </a>
         </div>

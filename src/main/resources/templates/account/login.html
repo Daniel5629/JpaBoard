@@ -58,15 +58,11 @@
           placeholder="Password"
           required
         />
-        <!-- <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div> -->
 
         <div class="mb-3">
           <div th:if="${param.error}" class="alert alert-danger" role="alert">
             이메일 또는 패스워드가 틀립니다.
+            <span th:text="${loginFailMsg}"></span>
           </div>
           <div th:if="${param.logout}" class="alert alert-primary" role="alert">
             로그아웃 완료

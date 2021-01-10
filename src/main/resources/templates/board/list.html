@@ -5,7 +5,7 @@
     <div th:replace="fragments::menu('board')"></div>
 
     <main class="container">
-      <h2 class="mb-3">게시판 목록</h2>
+      <h2 class="mb-3">📋 게시판 목록 📋</h2>
 
       <form
         class="form-inline d-flex justify-content-end"
@@ -22,7 +22,11 @@
             th:value="${param.searchText}"
           />
         </div>
-        <button type="submit" class="btn btn-primary mb-2">검색</button>
+        <button
+          type="submit"
+          class="btn btn-primary mb-2"
+          th:text="'🔎 검색'"
+        ></button>
       </form>
 
       <h4><b>Total: </b><span th:text="${total}"></span></h4>
@@ -132,8 +136,12 @@
       </nav>
 
       <div class="text-right">
-        <a type="button" class="btn btn-primary" th:href="@{/board/form}">
-          작성
+        <a
+          type="button"
+          class="btn btn-primary"
+          th:href="@{/board/form}"
+          th:text="'✏ 글쓰기'"
+        >
         </a>
       </div>
     </main>

@@ -5,7 +5,7 @@
     <div th:replace="fragments::menu('board')"></div>
 
     <main class="container">
-      <h2>게시글 조회</h2>
+      <h2>📄 게시글 조회 📄</h2>
       <div class="mb-3">
         <div class="mb-3">
           <label for="title" class="form-label">제목</label>
@@ -32,30 +32,41 @@
         method="POST"
         id="deleteForm"
       >
-        <div class="float-end">
-          <a
-            type="button"
-            class="btn btn-primary mx-1"
-            th:href="@{/board/form(id=${board.id},mode=${'U'})}"
-          >
-            수정
-          </a>
+        <div class="text-right">
+          <span id="buttonSpan">
+            <span
+              th:text="${board.user.username}"
+              id="usernameText"
+              style="display: none"
+            ></span>
+            <span
+              id="sessionUsernameText"
+              sec:authentication="name"
+              style="display: none"
+            ></span>
+            <a
+              type="button"
+              class="btn btn-primary mx-1"
+              th:href="@{/board/form(id=${board.id},mode=${'U'})}"
+              th:text="'✂ 수정'"
+            >
+            </a>
 
-          <button
-            type="button"
-            id="delete"
-            name="delete"
-            class="btn btn-danger"
-            th:text="'삭제'"
-            onclick="javascript:deleteBoard()"
-          ></button>
-
+            <button
+              type="button"
+              id="delete"
+              name="delete"
+              class="btn btn-danger"
+              th:text="'⚠ 삭제'"
+              onclick="javascript:deleteBoard()"
+            ></button>
+          </span>
           <a
             type="button"
             class="btn btn-secondary mx-1"
             th:href="@{/board/list}"
+            th:text="'📋 목록'"
           >
-            목록
           </a>
         </div>
       </form>
@@ -64,8 +75,17 @@
     <div th:replace="fragments::footer"></div>
 
     <script type="text/javascript">
+      window.onload = () => {
+        const unt = document.querySelector("#usernameText").textContent;
+        const sunt = document.querySelector("#sessionUsernameText").textContent;
+
+        if (unt != sunt) {
+          document.querySelector("#buttonSpan").style.display = "none";
+        }
+      };
+
       function deleteBoard() {
-        if (!window.confirm("삭제하시겠습니까?")) {
+        if (!window.confirm("⚠ 삭제하시겠습니까? ⚠")) {
           return;
         }
 
