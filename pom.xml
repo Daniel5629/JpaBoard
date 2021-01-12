@@ -8,10 +8,10 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.restboot</groupId>
-    <artifactId>restboot</artifactId>
+    <groupId>com.jpa_board</groupId>
+    <artifactId>jpa_board</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>restboot</name>
+    <name>jpa_board</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
