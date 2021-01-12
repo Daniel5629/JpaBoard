@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 class BoardControllerTest {
 
     @Autowired
@@ -41,12 +44,6 @@ class BoardControllerTest {
     @Test
     @DisplayName("게시물을 작성한다")
     public void postBoard() throws Exception {
-
-        mockMvc.perform(post("/board/form")
-                .param("title", "타이틀")
-                .param("content","내용"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/board/list"));
     }
 
     @Test
