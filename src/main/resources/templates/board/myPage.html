@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="fragments::header('board')"></head>
+  <head th:replace="fragments::header('mypage')"></head>
   <body>
-    <div th:replace="fragments::menu('board')"></div>
+    <div th:replace="fragments::menu('mypage')"></div>
 
     <main class="container">
-      <h2 class="mb-3">📋 게시판 목록 📋</h2>
+      <h2 class="mb-3">📋 마이페이지 📋</h2>
 
       <form
         class="form-inline d-flex justify-content-end"
@@ -42,7 +42,6 @@
             <th scope="col">No.</th>
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
-            <th scope="col">최근 작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -54,10 +53,7 @@
                 th:href="@{/board/form(id=${board.id})}"
               ></a>
             </td>
-            <td th:text="${board.user.nickname}"></td>
-            <td
-              th:text="${board.updatedDate != null ? #temporals.format(board.updatedDate, 'yyyy-MM-dd HH:mm:ss') : #temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm:ss')}"
-            ></td>
+            <td th:text="${board.user.username}"></td>
           </tr>
         </tbody>
       </table>
@@ -138,16 +134,6 @@
           </li>
         </ul>
       </nav>
-
-      <div class="text-right">
-        <a
-          type="button"
-          class="btn btn-primary"
-          th:href="@{/board/form}"
-          th:text="'✏ 글쓰기'"
-        >
-        </a>
-      </div>
     </main>
     <div th:replace="fragments::footer"></div>
   </body>

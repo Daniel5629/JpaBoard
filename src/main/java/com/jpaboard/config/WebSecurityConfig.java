@@ -1,4 +1,4 @@
-package com.restboot.config;
+package com.jpaboard.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    //패턴을 이용해서 접근막음
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -30,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .formLogin()
                     .loginPage("/account/login")
+                    .defaultSuccessUrl("/")
                     .permitAll()
                     .and()
                 .logout()
@@ -38,14 +40,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll();
     }
 
+    //HttpSecurity 에서 적용한 패턴의 제외한 접근 - 정적리소스, HTML 파일 허용처리
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/favicon.ico", "/resources/**", "/error");
     }
 
-//    Authentication 로그인
-//    Authorization 권한
+//    Authentication 로그인 - 인증
+//    Authorization 권한 - 허가
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {

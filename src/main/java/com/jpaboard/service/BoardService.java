@@ -1,8 +1,8 @@
-package com.restboot.service;
+package com.jpaboard.service;
 
-import com.restboot.model.Board;
-import com.restboot.model.User;
-import com.restboot.repository.BoardRepository;
+import com.jpaboard.model.Board;
+import com.jpaboard.model.User;
+import com.jpaboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +23,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Board> getBoarsWithSearchText(String title, String content, Pageable pageable) {
+    public Page<Board> getBoardsWithSearchText(String title, String content, Pageable pageable) {
         return boardRepository.findByTitleContainingOrContentContaining(title, content, pageable);
     }
 
@@ -37,12 +37,9 @@ public class BoardService {
     @Transactional(readOnly = true)
     private void checkBoardAuth(String username, Long id) {
         User user = userService.getUser(username);
-        Board board = getBoard(id);
-
         Long userId = user.getId();
-        Long boardUserId = board.getUser().getId();
 
-        if (userId != boardUserId) {
+        if (userId != id) {
             throw new RuntimeException("권한이 없는 게시물입니다.");
         }
     }
@@ -55,16 +52,23 @@ public class BoardService {
     }
 
     @Transactional
-    public Long updateBoard(String username, Board board) {
-        checkBoardAuth(username, board.getId());
+    public Long updateBoard(String username, Board board) { // TODO Board -> dto
+        Board boardFromDB = boardRepository.findById(board.getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
 
-        return boardRepository.save(board).getId();
+        boardFromDB.update(board.getTitle(), board.getContent());
+        checkBoardAuth(username, boardFromDB.getUser().getId());
+
+        return boardRepository.save(boardFromDB).getId();
     }
 
     @Transactional
     public void deleteBoard(String username, Long id) {
-        checkBoardAuth(username, id);
+        Board boardFromDB = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
 
-        boardRepository.deleteById(id);
+        checkBoardAuth(username, boardFromDB.getUser().getId());
+
+        boardRepository.deleteById(boardFromDB.getId());
     }
 }

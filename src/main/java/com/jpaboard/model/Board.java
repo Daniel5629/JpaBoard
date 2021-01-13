@@ -1,4 +1,4 @@
-package com.restboot.model;
+package com.jpaboard.model;
 
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Board {
+public class Board extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +25,12 @@ public class Board {
     @NotNull
     private String content;
 
-//    @Builder
-//    public Board(String title, String content) {
-//        this.title = title;
-//        this.content = content;
-//    }
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

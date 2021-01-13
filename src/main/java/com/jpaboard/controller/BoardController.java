@@ -1,8 +1,8 @@
-package com.restboot.controller;
+package com.jpaboard.controller;
 
-import com.restboot.model.Board;
-import com.restboot.service.BoardService;
-import com.restboot.validator.BoardValidator;
+import com.jpaboard.model.Board;
+import com.jpaboard.service.BoardService;
+import com.jpaboard.validator.BoardValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +32,7 @@ public class BoardController {
     public String list(Model model, @PageableDefault(size = 10) Pageable pageable,
                        @RequestParam(required = false, defaultValue = "") String searchText) {
 
-        Page<Board> boards = boardService.getBoarsWithSearchText(searchText, searchText, pageable);
+        Page<Board> boards = boardService.getBoardsWithSearchText(searchText, searchText, pageable);
 
         int startPage = Math.max(1, boards.getPageable().getPageNumber() - 4);
         int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber() + 4);
@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     @GetMapping("/form")
-    public String form(Model model, @RequestParam(required = false) String mode, @RequestParam(required = false) Long id) {
+    public String form(Model model, @RequestParam(required = false) String mode, @RequestParam(required = false) Long id, Authentication authentication) {
 
         if (id == null) {
             model.addAttribute("board", new Board());
@@ -92,5 +92,14 @@ public class BoardController {
 
         boardService.deleteBoard(username, id);
         return "redirect:/board/list";
+    }
+
+    @GetMapping("/my-page")
+    public String myPage() {
+
+
+
+
+        return "board/myPage";
     }
 }

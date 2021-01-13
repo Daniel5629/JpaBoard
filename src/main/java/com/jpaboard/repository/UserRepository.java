@@ -1,6 +1,6 @@
-package com.restboot.repository;
+package com.jpaboard.repository;
 
-import com.restboot.model.User;
+import com.jpaboard.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

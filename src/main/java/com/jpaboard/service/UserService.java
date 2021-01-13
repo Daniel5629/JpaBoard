@@ -1,9 +1,9 @@
-package com.restboot.service;
+package com.jpaboard.service;
 
-import com.restboot.model.Role;
-import com.restboot.model.User;
-import com.restboot.repository.RoleRepository;
-import com.restboot.repository.UserRepository;
+import com.jpaboard.model.Role;
+import com.jpaboard.model.User;
+import com.jpaboard.repository.RoleRepository;
+import com.jpaboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService  {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -36,4 +36,6 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
         return user;
     }
+
+
 }

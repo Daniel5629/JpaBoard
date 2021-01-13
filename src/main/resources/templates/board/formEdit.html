@@ -12,7 +12,7 @@
         th:object="${board}"
         method="post"
       >
-        <div class="mb-3">
+        <div class="my-3">
           <div class="mb-3">
             <input type="hidden" th:field="*{id}" />
 
@@ -30,6 +30,17 @@
               th:if="${#fields.hasErrors('title')}"
               th:errors="*{title}"
             ></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="nickname" class="form-label">작성자</label>
+            <input
+              type="text"
+              id="nickname"
+              class="form-control"
+              th:field="${board.user.nickname}"
+              readonly
+            />
           </div>
 
           <label for="content" class="form-label">내용</label>

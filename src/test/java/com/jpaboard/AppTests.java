@@ -1,4 +1,4 @@
-package com.restboot;
+package com.jpaboard;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

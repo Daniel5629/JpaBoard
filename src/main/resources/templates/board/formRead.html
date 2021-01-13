@@ -6,7 +6,7 @@
 
     <main class="container">
       <h2>📄 게시글 조회 📄</h2>
-      <div class="mb-3">
+      <div class="my-3">
         <div class="mb-3">
           <label for="title" class="form-label">제목</label>
           <input
@@ -14,6 +14,17 @@
             id="title"
             class="form-control"
             th:field="${board.title}"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="nickname" class="form-label">작성자</label>
+          <input
+            type="text"
+            id="nickname"
+            class="form-control"
+            th:field="${board.user.nickname}"
             readonly
           />
         </div>

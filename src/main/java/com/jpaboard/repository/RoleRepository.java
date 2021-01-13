@@ -1,6 +1,6 @@
-package com.restboot.repository;
+package com.jpaboard.repository;
 
-import com.restboot.model.Role;
+import com.jpaboard.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

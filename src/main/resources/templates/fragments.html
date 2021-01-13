@@ -20,6 +20,17 @@
         padding-top: 5rem;
       }
     </style>
+    <script type="text/javascript">
+      window.onload = () => {
+        document.querySelector("#logoutBtn").onclick = () => {
+          if (!confirm("로그아웃 하시겠습니까?")) {
+            return;
+          }
+
+          document.querySelector("#logoutForm").submit();
+        };
+      };
+    </script>
   </head>
   <body>
     <div th:fragment="menu(menu)">
@@ -40,16 +51,6 @@
 
           <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <!-- <li class="nav-item">
-                <a
-                  class="nav-link"
-                  aria-current="page"
-                  href="#"
-                  th:href="@{/}"
-                  th:classappend="${menu} == 'home' ? 'active'"
-                  >홈</a
-                >
-              </li> -->
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -57,6 +58,16 @@
                   th:classappend="${menu} == 'board' ? 'active'"
                   th:href="@{/board/list}"
                   >게시판</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#"
+                  th:classappend="${menu} == 'mypage' ? 'active'"
+                  th:href="@{/board/list}"
+                  sec:authorize="isAuthenticated()"
+                  >마이페이지</a
                 >
               </li>
             </ul>
@@ -82,18 +93,47 @@
             th:action="@{/logout}"
             method="POST"
             sec:authorize="isAuthenticated()"
+            id="logoutForm"
           >
             <span class="text-white" sec:authentication="name">user</span>
             <span class="text-white mr-2">님 환영합니다.</span>
-            <!-- <span
-              class="text-white mx-2"
-              sec:authentication="principal.authorities"
-              >권한</span
-            > -->
-            <button class="btn btn-secondary" type="submit">Logout</button>
+            <button class="btn btn-secondary" type="button" id="logoutBtn">
+              Logout
+            </button>
           </form>
         </div>
       </nav>
+    </div>
+
+    <div th:fragment="sideMenu" class="col-md-4 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Your cart</span>
+        <span class="badge badge-secondary badge-pill">3</span>
+      </h4>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">Product name</h6>
+            <small class="text-muted">Brief description</small>
+          </div>
+          <span class="text-muted">$12</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <!-- <li class="list-group-item d-flex justify-content-between">
+          <span>Total (USD)</span>
+          <strong>$20</strong>
+        </li> -->
+        </li>
+      </ul>
+
+      <!-- <form class="card p-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Promo code">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+          </div>
+        </div>
+      </form> -->
     </div>
 
     <div th:fragment="footer">

@@ -1,4 +1,4 @@
-package com.restboot.model;
+package com.jpaboard.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,7 @@ public class User {
 
     private String username;
     private String password;
+    private String nickname;
     private Boolean enabled;
 
     @ManyToMany

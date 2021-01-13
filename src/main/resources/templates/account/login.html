@@ -4,84 +4,151 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
+    />
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+      .divider-text {
+        position: relative;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .divider-text span {
+        padding: 7px;
+        font-size: 12px;
+        position: relative;
+        z-index: 2;
+      }
+      .divider-text:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+        top: 55%;
+        left: 0;
+        z-index: 1;
       }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+      .btn-facebook {
+        background-color: #405d9d;
+        color: #fff;
+      }
+      .btn-twitter {
+        background-color: #42aeec;
+        color: #fff;
+      }
+      .btn-google {
+        background-color: #db3236;
+        color: #fff;
       }
     </style>
     <link th:href="@{/css/signin.css}" rel="stylesheet" />
     <title>로그인</title>
   </head>
   <body class="text-center">
-    <main class="form-signin">
-      <form th:action="@{/account/login}" method="POST">
-        <a th:href="@{/}"
-          ><img
-            class="mb-4"
-            src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg"
-            alt=""
-            width="72"
-            height="72"
-        /></a>
-        <h1 class="h3 mb-3 fw-normal">로그인 페이지</h1>
-        <label for="username" class="visually-hidden">Email</label>
-        <input
-          type="email"
-          id="username"
-          name="username"
-          class="form-control"
-          placeholder="Email"
-          required
-          autofocus
-        />
-        <label for="password" class="visually-hidden">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="form-control"
-          placeholder="Password"
-          required
-        />
-
-        <div class="mb-3">
-          <div th:if="${param.error}" class="alert alert-danger" role="alert">
-            이메일 또는 패스워드가 틀립니다.
-            <span th:text="${loginFailMsg}"></span>
+    <div class="container">
+      <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px">
+          <h4 class="card-title mt-3 text-center">🙋‍♂️ 로그인 🙋‍♀️</h4>
+          <p class="text-center">이메일 계정으로 간편하게 로그인하세요</p>
+          <p>
+            <a
+              href=""
+              class="btn btn-block btn-twitter"
+              onclick="javascript:alert('추후에 지원 될 예정입니다.')"
+            >
+              <i class="fab fa-twitter"></i>   Login via Twitter</a
+            >
+            <a
+              href=""
+              class="btn btn-block btn-facebook"
+              onclick="javascript:alert('추후에 지원 될 예정입니다.')"
+            >
+              <i class="fab fa-facebook-f"></i>   Login via facebook</a
+            >
+            <a
+              href=""
+              class="btn btn-block btn-google"
+              onclick="javascript:alert('추후에 지원 될 예정입니다.')"
+            >
+              <i class="fab fa-google"></i>   Login via google</a
+            >
+          </p>
+          <p class="divider-text">
+            <span class="bg-light">또는</span>
+          </p>
+          <div class="mb-3">
+            <div th:if="${param.error}" class="alert alert-danger" role="alert">
+              이메일 또는 패스워드가 틀립니다.
+              <span th:text="${loginFailMsg}"></span>
+            </div>
+            <div
+              th:if="${param.logout}"
+              class="alert alert-primary"
+              role="alert"
+            >
+              로그아웃 완료
+            </div>
           </div>
-          <div th:if="${param.logout}" class="alert alert-primary" role="alert">
-            로그아웃 완료
-          </div>
-        </div>
+          <form th:action="@{/account/login}" method="POST">
+            <!-- username(email) -->
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+              <input
+                type="email"
+                id="username"
+                name="username"
+                class="form-control"
+                placeholder="이메일"
+                required
+                autofocus
+              />
+            </div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
-          로그인
-        </button>
-        <a
-          class="w-100 btn btn-lg btn-secondary mt-2"
-          type="button"
-          th:href="@{/account/register}"
-        >
-          회원가입
-        </a>
-        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-      </form>
-    </main>
+            <!-- create password -->
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                placeholder="패스워드"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                th:text="'로그인'"
+              ></button>
+            </div>
+
+            <p class="text-center">
+              회원이 아니신가요? <a th:href="@{/account/register}">회원가입</a>
+            </p>
+            <p class="text-center">메인으로가기 <a th:href="@{/}">이동</a></p>
+          </form>
+        </article>
+      </div>
+    </div>
 
     <div th:replace="fragments::footer"></div>
   </body>
