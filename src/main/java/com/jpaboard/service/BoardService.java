@@ -1,7 +1,7 @@
 package com.jpaboard.service;
 
 import com.jpaboard.model.Board;
-import com.jpaboard.model.User;
+import com.jpaboard.model.Account;
 import com.jpaboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final UserService userService;
+    private final AccountService userService;
 
     @Transactional(readOnly = true)
     public Page<Board> getBoards(Pageable pageable) {
@@ -36,7 +36,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     private void checkBoardAuth(String username, Long id) {
-        User user = userService.getUser(username);
+        Account user = userService.getUser(username);
         Long userId = user.getId();
 
         if (userId != id) {
@@ -46,7 +46,7 @@ public class BoardService {
 
     @Transactional
     public Long postBoard(String username, Board board) {
-        User user = userService.getUser(username);
+        Account user = userService.getUser(username);
         board.setUser(user);
         return boardRepository.save(board).getId();
     }

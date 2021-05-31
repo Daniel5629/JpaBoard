@@ -27,7 +27,7 @@ public class Board extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private Account user;
 
     public void update(String title, String content) {
         this.title = title;

@@ -1,5 +1,6 @@
 package com.jpaboard.config;
 
+import com.jpaboard.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +19,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+//    @Autowired
+//    DataSource dataSource;
+
     @Autowired
-    DataSource dataSource;
+    private AccountService accountService;
+
 
     //패턴을 이용해서 접근막음
     @Override
@@ -51,21 +56,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    Authentication 로그인 - 인증
 //    Authorization 권한 - 허가
 
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username, password, enabled " +
-                                "from user " +
-                                "where username = ?")
-                .authoritiesByUsernameQuery(
-                        "select u.username, r.name " +
-                                "from user_role ur  " +
-                                "inner join user u on u.id = ur.user_id " +
-                                "inner join role r on r.id = ur.role_id " +
-                                "where u.username = ?")
-                .passwordEncoder(passwordEncoder());
+//    @Autowired
+//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "select username, password, enabled " +
+//                                "from user " +
+//                                "where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "select u.username, r.name " +
+//                                "from user_role ur  " +
+//                                "inner join user u on u.id = ur.user_id " +
+//                                "inner join role r on r.id = ur.role_id " +
+//                                "where u.username = ?")
+//                .passwordEncoder(passwordEncoder());
+//    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
